@@ -42,8 +42,8 @@ class APIService {
         }
       }
     }
-    print(
-        'Request $uri faild\nResponse: ${response.statusCode} ${response.reasonPhrase}');
+    debugPrint(
+        'Request $uri failed \n Response: ${response.statusCode} ${response.reasonPhrase}');
 
     throw response;
   }
