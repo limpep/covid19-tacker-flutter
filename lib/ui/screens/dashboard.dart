@@ -2,6 +2,9 @@ import 'package:covid19tracker/app/services/api.dart';
 import 'package:covid19tracker/repositories/data_repository.dart';
 import 'package:covid19tracker/repositories/endpoints_data.dart';
 import 'package:covid19tracker/ui/components/endpint_card.dart';
+import 'package:covid19tracker/ui/components/last_updated_status.dart';
+import 'package:covid19tracker/ui/components/show_alert_dialog.dart';
+import 'package:covid19tracker/utils/last_updated_date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
@@ -14,7 +17,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  EndPointData _endpointsData;
+  EndPointsData _endpointsData;
   final GlobalKey<_DashboardState> _refreshIndicatorKey =
       GlobalKey<_DashboardState>();
 
@@ -33,11 +36,20 @@ class _DashboardState extends State<Dashboard> {
       setState(() => _endpointsData = endpointData);
     } catch (e) {
       debugPrint(e.toString());
+      await showAlertDialog(
+          context: context,
+          title: 'Connection error',
+          content: 'Could not retrieve data. Please try again later.',
+          defaultActionText: 'OK');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final formatter = LastUpdatedDateFormatter(
+        lastUpdated: _endpointsData != null
+            ? _endpointsData.values[EndPoint.cases].date ?? ''
+            : null);
     return Scaffold(
       appBar: AppBar(
         title: Text("Covid19 Tracker"),
@@ -61,11 +73,14 @@ class _DashboardState extends State<Dashboard> {
         showChildOpacityTransition: false,
         child: ListView(
           children: <Widget>[
+            LastUpdatedStatus(
+              text: formatter.lastUpdatedStatusText(),
+            ),
             for (var endpoint in EndPoint.values)
               EndPointCard(
                 endpoint: endpoint,
                 value: _endpointsData != null
-                    ? _endpointsData.values[endpoint]
+                    ? _endpointsData.values[endpoint].value
                     : null,
               ),
           ],

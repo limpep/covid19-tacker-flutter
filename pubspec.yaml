@@ -17,6 +17,7 @@ dependencies:
   provider: ^4.0.5+1
   shared_preferences: ^0.5.7
   liquid_pull_to_refresh: ^1.2.0
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:

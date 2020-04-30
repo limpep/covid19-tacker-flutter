@@ -1,15 +1,16 @@
 import 'package:covid19tracker/app/services/api.dart';
+import 'package:covid19tracker/app/services/endpoint_data.dart';
 import 'package:flutter/foundation.dart';
 
-class EndPointData {
-  EndPointData({@required this.values});
-  final Map<EndPoint, int> values;
+class EndPointsData {
+  EndPointsData({@required this.values});
+  final Map<EndPoint, EndPointData> values;
 
-  int get cases => values[EndPoint.cases];
-  int get casesSuspected => values[EndPoint.casesSuspected];
-  int get casesConfirmed => values[EndPoint.casesConfirmed];
-  int get deaths => values[EndPoint.deaths];
-  int get recovered => values[EndPoint.recovered];
+  EndPointData get cases => values[EndPoint.cases];
+  EndPointData get casesSuspected => values[EndPoint.casesSuspected];
+  EndPointData get casesConfirmed => values[EndPoint.casesConfirmed];
+  EndPointData get deaths => values[EndPoint.deaths];
+  EndPointData get recovered => values[EndPoint.recovered];
 
   @override
   String toString() =>
