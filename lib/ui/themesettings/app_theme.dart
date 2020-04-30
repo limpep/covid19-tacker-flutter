@@ -15,8 +15,8 @@ final appThemeData = {
   AppTheme.Dark: ThemeData.dark().copyWith(
       scaffoldBackgroundColor: Color(0xFF101010),
       cardColor: Color(0xFF222222),
-      accentColor: Colors.blueGrey,
-      canvasColor: CompanyColors.black[200]),
+      accentColor: Color(0xFF222222),
+      canvasColor: Colors.blueGrey),
   AppTheme.LightGreen:
       ThemeData(brightness: Brightness.light, primaryColor: Colors.lightGreen),
   AppTheme.DarkGreen:

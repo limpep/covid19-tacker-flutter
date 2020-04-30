@@ -20,12 +20,13 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   EndPointsData _endpointsData;
-  final GlobalKey<_DashboardState> _refreshIndicatorKey =
-      GlobalKey<_DashboardState>();
 
   @override
   void initState() {
     super.initState();
+
+    final dataRepository = Provider.of<DataRepository>(context, listen: false);
+    _endpointsData = dataRepository.getAllEndpointsCachedData();
     _updateData();
   }
 
@@ -57,7 +58,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     final formatter = LastUpdatedDateFormatter(
         lastUpdated: _endpointsData != null
-            ? _endpointsData.values[EndPoint.cases].date ?? ''
+            ? _endpointsData.values[EndPoint.cases]?.date ?? DateTime.now()
             : null);
     return Scaffold(
       appBar: AppBar(
@@ -80,6 +81,8 @@ class _DashboardState extends State<Dashboard> {
       body: LiquidPullToRefresh(
         onRefresh: _updateData,
         showChildOpacityTransition: false,
+        springAnimationDurationInMilliseconds: 600,
+        backgroundColor: Theme.of(context).canvasColor,
         child: ListView(
           children: <Widget>[
             LastUpdatedStatus(
@@ -89,7 +92,7 @@ class _DashboardState extends State<Dashboard> {
               EndPointCard(
                 endpoint: endpoint,
                 value: _endpointsData != null
-                    ? _endpointsData.values[endpoint].value
+                    ? _endpointsData.values[endpoint]?.value
                     : null,
               ),
           ],
