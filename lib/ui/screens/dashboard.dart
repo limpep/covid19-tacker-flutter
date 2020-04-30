@@ -3,6 +3,7 @@ import 'package:covid19tracker/repositories/data_repository.dart';
 import 'package:covid19tracker/ui/components/endpint_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 import 'settings.dart';
 
@@ -13,6 +14,8 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int _cases;
+  final GlobalKey<_DashboardState> _refreshIndicatorKey =
+      GlobalKey<_DashboardState>();
 
   @override
   void initState() {
@@ -21,9 +24,14 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Future<void> _updateData() async {
-    final dataRepository = Provider.of<DataRepository>(context, listen: false);
-    final cases = await dataRepository.getEndpointData(EndPoint.cases);
-    setState(() => _cases = cases);
+    try {
+      final dataRepository =
+          Provider.of<DataRepository>(context, listen: false);
+      final cases = await dataRepository.getEndpointData(EndPoint.cases);
+      setState(() => _cases = cases);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   @override
@@ -46,10 +54,14 @@ class _DashboardState extends State<Dashboard> {
           )
         ],
       ),
-      body: ListView(
-        children: <Widget>[
-          EndPointCard(endpoint: EndPoint.cases, value: _cases),
-        ],
+      body: LiquidPullToRefresh(
+        onRefresh: _updateData,
+        showChildOpacityTransition: false,
+        child: ListView(
+          children: <Widget>[
+            EndPointCard(endpoint: EndPoint.cases, value: _cases),
+          ],
+        ),
       ),
     );
   }
