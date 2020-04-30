@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:covid19tracker/app/services/api.dart';
 import 'package:covid19tracker/repositories/data_repository.dart';
 import 'package:covid19tracker/repositories/endpoints_data.dart';
@@ -34,12 +36,19 @@ class _DashboardState extends State<Dashboard> {
 //      final cases = await dataRepository.getEndpointData(EndPoint.cases);
       final endpointData = await dataRepository.getAllEndpointData();
       setState(() => _endpointsData = endpointData);
-    } catch (e) {
+    } on SocketException catch (e) {
       debugPrint(e.toString());
       await showAlertDialog(
           context: context,
           title: 'Connection error',
           content: 'Could not retrieve data. Please try again later.',
+          defaultActionText: 'OK');
+    } catch (e) {
+      debugPrint(e.toString());
+      await showAlertDialog(
+          context: context,
+          title: 'Unknown error',
+          content: 'Server returned an unknown error.',
           defaultActionText: 'OK');
     }
   }
