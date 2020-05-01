@@ -35,7 +35,7 @@ class APIService {
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
-      if (data.isEmpty) {
+      if (data.isNotEmpty) {
         final Map<String, dynamic> endpointData = data[0];
         final String responseJson = _responseJsonKey[endpoint];
         final int value = endpointData[responseJson];
