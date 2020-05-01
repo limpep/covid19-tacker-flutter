@@ -1,16 +1,20 @@
-# covid19tracker
+# covid-19 tracker
 
-A new Flutter application.
+### API
+https://apimarket.nubentos.com/store/apis/info?name=API-nCoV2019&version=1.0.0&tenant=nubentos.com#!/default/get_cases
 
-## Getting Started
+### Libraries used
+ * http: ^0.12.1
+ * provider: ^4.0.5+1
+ * shared_preferences: ^0.5.7
+ * liquid_pull_to_refresh: ^1.2.0
+ * intl: ^0.16.1
+ 
+ ### Screenshot
 
-This project is a starting point for a Flutter application.
+<img src="https://raw.githubusercontent.com/limpep/covid19-tacker-flutter/master/screenshots/Screenshot_1588327623.png" width="200" height="400" />
 
-A few resources to get you started if this is your first Flutter project:
+<img src="https://raw.githubusercontent.com/limpep/covid19-tacker-flutter/master/screenshots/Screenshot_1588327510.png" width="200" height="400" />
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="https://raw.githubusercontent.com/limpep/covid19-tacker-flutter/master/screenshots/Screenshot_1588327407.png" width="200" height="400" />
